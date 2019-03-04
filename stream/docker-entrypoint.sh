@@ -15,6 +15,8 @@ trap exit_func SIGTERM SIGINT
 
 if [ "$1" = "stream" ]; then
     ffmpeg_cmd=$(eval echo "$FFMPEG_CMD")
+    echo "Command-line for ffmpeg from FFMPEG_CMD variable:"
+    echo "  $ffmpeg_cmd"
     exec ffmpeg $ffmpeg_cmd
 fi
 
