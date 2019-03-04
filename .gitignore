@@ -1,0 +1,2 @@
+# Storing API keys in .env files
+*.env
