@@ -24,7 +24,7 @@ services:
       - FFMPEG_FPS=10
       - FFMPEG_CMD=-loglevel info
           -re -f mjpeg -framerate $${FFMPEG_FPS} -i $${SOURCE_URL}
-          -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero
+          -f lavfi -i "amovie=/music/individual/Sugar_Pines.mp3:loop=0,asetpts=N/SR/TB"
           -c:v libx264 -crf 22 -framerate $${FFMPEG_FPS} -g $$(($${FFMPEG_FPS} * 2))
           -strict experimental -c:a aac -b:a 128k -ar 44100
           -filter:v "pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2,scale=854:480,format=yuv420p"
