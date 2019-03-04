@@ -2,6 +2,20 @@ version: '3'
 
 services:
 
+  music:
+    build: ./music
+    volumes:
+      - music:/music
+    networks:
+      - net
+
+  text:
+    build: ./text
+    volumes:
+      - text:/text
+    networks:
+      - net
+
   stream-testing:
     build: ./stream
     env_file:
@@ -16,3 +30,15 @@ services:
           -filter:v "pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2,scale=854:480,format=yuv420p"
           -shortest -movflags +faststart -f flv $${STREAM_URL}/$${STREAM_KEY}
     command: stream
+    volumes:
+      - music:/music
+      - text:/text
+    networks:
+      - net
+
+volumes:
+  music:
+  text:
+
+networks:
+  net:
