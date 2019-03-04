@@ -11,8 +11,11 @@ services:
 
   text:
     build: ./text
+    env_file:
+      - .stream-testing.env
     volumes:
       - text:/text
+      - font:/usr/share/fonts/TTF
     networks:
       - net
 
@@ -22,23 +25,28 @@ services:
       - .stream-testing.env
     environment:
       - FFMPEG_FPS=10
+      - FFMPEG_FILTER_VIDEO=pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2,scale=854:480,format=yuv420p
+      - FFMPEG_FILTER_PRTTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/printer.txt:x=10:y=10:reload=1
+      - FFMPEG_FILTER_JOBTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/job.txt:x=10:y=10+(1.5*line_h):reload=1
       - FFMPEG_CMD=-loglevel info
           -re -f mjpeg -framerate $${FFMPEG_FPS} -i $${SOURCE_URL}
           -f lavfi -i "amovie=/music/individual/Sugar_Pines.mp3:loop=0,asetpts=N/SR/TB"
           -c:v libx264 -crf 22 -framerate $${FFMPEG_FPS} -g $$(($${FFMPEG_FPS} * 2))
           -strict experimental -c:a aac -b:a 128k -ar 44100
-          -filter:v "pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2,scale=854:480,format=yuv420p"
+          -filter:v "$${FFMPEG_FILTER_VIDEO}$${FFMPEG_FILTER_PRTTXT}$${FFMPEG_FILTER_JOBTXT}"
           -shortest -movflags +faststart -f flv $${STREAM_URL}/$${STREAM_KEY}
     command: stream
     volumes:
       - music:/music
       - text:/text
+      - font:/font
     networks:
       - net
 
 volumes:
   music:
   text:
+  font:
 
 networks:
   net:
