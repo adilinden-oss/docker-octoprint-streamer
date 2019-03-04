@@ -2,9 +2,11 @@ FROM alpine:3.9
 
 MAINTAINER Adi Linden <adi@adis.ca>
 
-RUN apk add --no-cache \
+RUN apk add --no-cache --update \
         curl \
-        jq
+        jq \
+        ttf-freefont \
+        ttf-opensans
 
 WORKDIR /text
 
