@@ -9,4 +9,4 @@ This particular container will obtain printer and job status information from th
 
 ## Building & Usage
 
-See the [README.d](https://github.com/adilinden-oss/docker-octoprint-streamer/blob/master/README.md) in the main GitHub repo [adilinden-oss/docker-octoprint-streamer](https://github.com/adilinden-oss/docker-octoprint-streamer).
+See the [README.md](https://github.com/adilinden-oss/docker-octoprint-streamer/blob/master/README.md) in the main GitHub repo [adilinden-oss/docker-octoprint-streamer](https://github.com/adilinden-oss/docker-octoprint-streamer).
