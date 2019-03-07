@@ -15,7 +15,7 @@ RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=6187c94ae427bba6
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=9f269fb6bf30668b  # Sugar Pines
 
 WORKDIR /
-RUN ls -1 /music/individual/*.mp3 > /music/list.txt
+RUN for i in /music/individual/*.mp3; do echo "file '$i'" >> /music/list.txt; done
 
 ###
 
