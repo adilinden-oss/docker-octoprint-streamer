@@ -3,14 +3,16 @@ version: '3'
 services:
 
   music:
-    build: ./music
+    #build: ./music
+    image: adilinden/octoprint-streamer-music
     volumes:
       - music:/music
     networks:
       - net
 
   text:
-    build: ./text
+    #build: ./text
+    image: adilinden/octoprint-streamer-text
     env_file:
       - .stream-testing.env
     volumes:
@@ -20,7 +22,8 @@ services:
       - net
 
   stream-testing:
-    build: ./stream
+    #build: ./stream
+    image: adilinden/octoprint-streamer-stream
     env_file:
       - .stream-testing.env
     environment:
