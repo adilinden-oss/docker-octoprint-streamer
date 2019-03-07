@@ -14,9 +14,9 @@ RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=f5a909be915457d4
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=6187c94ae427bba6  # Fargo
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=9f269fb6bf30668b  # Sugar Pines
 
-WORKDIR /music
+WORKDIR /
 RUN z=0; \
-    for i in $(ls -1 */*.mp3); do \
+    for i in $(ls -1 /music/*/*.mp3); do \
         if [ $z -gt 0 ]; then \
             printf "|%s" "$i" >> /music/all.txt; \
         else \
@@ -24,7 +24,7 @@ RUN z=0; \
         fi; \
         z=1; \
     done
-RUN LIST=$(head -1 /music/all.txt); ffmpeg -i "concat:$LIST" -acodec copy all.mp3
+RUN LIST=$(head -1 /music/all.txt); ffmpeg -i "concat:$LIST" -acodec copy /music/all.mp3
 
 ###
 
