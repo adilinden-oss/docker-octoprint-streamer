@@ -30,7 +30,7 @@ services:
       - FFMPEG_FILTER_JOBTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/job.txt:x=10:y=10+(1.5*line_h):reload=1
       - FFMPEG_CMD=-loglevel info
           -re -f mjpeg -framerate $${FFMPEG_FPS} -i $${SOURCE_URL}
-          -stream_loop -1 -i "concat:$$(head -1 /music/all.txt)"
+          -f lavfi -i "amovie=/music/all.mp3:loop=0,asetpts=N/SR/TB"
           -c:v libx264 -crf 22 -framerate $${FFMPEG_FPS} -g $$(($${FFMPEG_FPS} * 2))
           -strict experimental -c:a aac -b:a 128k -ar 44100
           -filter:v "$${FFMPEG_FILTER_VIDEO}$${FFMPEG_FILTER_PRTTXT}$${FFMPEG_FILTER_JOBTXT}"
