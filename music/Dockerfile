@@ -33,7 +33,7 @@ RUN LIST=$(head -1 /music/all.txt); ffmpeg -i "concat:$LIST" -acodec copy /music
 
 ###
 
-FROM busybox
+FROM alpine:3.9
 
 WORKDIR /music
 COPY --from=builder /music/ /music
