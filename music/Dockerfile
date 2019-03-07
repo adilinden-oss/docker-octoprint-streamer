@@ -2,7 +2,7 @@ FROM alpine:3.9 as builder
 
 MAINTAINER Adi Linden <adi@adis.ca>
 
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl ffmpeg
 
 WORKDIR /music/individual
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=154c28a7be031c89  # Glen Canyon
@@ -14,8 +14,17 @@ RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=f5a909be915457d4
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=6187c94ae427bba6  # Fargo
 RUN curl -JLO https://www.youtube.com/audiolibrary_download?vid=9f269fb6bf30668b  # Sugar Pines
 
-WORKDIR /
-RUN for i in /music/individual/*.mp3; do echo "file '$i'" >> /music/list.txt; done
+WORKDIR /music
+RUN z=0; \
+    for i in $(ls -1 */*.mp3); do \
+        if [ $z -gt 0 ]; then \
+            printf "|%s" "$i" >> /music/all.txt; \
+        else \
+            printf "%s" "$i" >> /music/all.txt; \
+        fi; \
+        z=1; \
+    done
+RUN LIST=$(head -1 /music/all.txt); ffmpeg -i "concat:$LIST" -acodec copy all.mp3
 
 ###
 
