@@ -21,7 +21,7 @@ services:
     networks:
       - net
 
-  stream-testing:
+  stream:
     #build: ./stream
     image: adilinden/octoprint-streamer-stream
     env_file:
