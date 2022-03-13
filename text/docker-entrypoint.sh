@@ -8,8 +8,8 @@ octopi_url="$OCTOPI_URL"
 SLEEP_SEC=10
 
 # Setup files
-echo "" > /text/printer.txt
-echo "" > /text/job.txt
+echo -en " --- " > /text/printer.txt
+echo -en " --- " > /text/job.txt
 
 # Setup vars
 last_filename=""
@@ -68,23 +68,23 @@ function get_status {
                 str_percentage=$(printf " (%.*f%%)" 2 "$octopi_completion")
 
                 # Update job status
-                echo -e "Job: ${octopi_filename} ${str_percentage}" > /text/job.txt
+                echo -en "Job: ${octopi_filename} ${str_percentage}" > /text/job.txt
             else
                 if [ -n "$last_filename" ]; then
                     # Update job status
-                    echo -e "Last Job: ${last_filename}" > /text/job.txt
+                    echo -en "Last Job: ${last_filename}" > /text/job.txt
                 fi
             fi
 
             # Update printer status
-            echo -e "Status: $octopi_state - Tool: ${octopi_tool_actual}${celsius}/${octopi_tool_target}${celsius} - Bed: ${octopi_bed_actual}${celsius}/${octopi_bed_target}${celsius}" > /text/printer.txt
+            echo -en "Status: $octopi_state - Tool: ${octopi_tool_actual}${celsius}/${octopi_tool_target}${celsius} - Bed: ${octopi_bed_actual}${celsius}/${octopi_bed_target}${celsius}" > /text/printer.txt
         else
             # Update status
-            echo "Status: Not Connected" > /text/printer.txt
+            echo -en "Status: Not Connected" > /text/printer.txt
         fi
     else
         # Update status
-        echo "Status: API Query Failure" > /text/printer.txt
+        echo -en "Status: API Query Failure" > /text/printer.txt
     fi
 
     # Create debug data
