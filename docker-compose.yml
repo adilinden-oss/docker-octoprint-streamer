@@ -3,7 +3,8 @@ version: '3'
 services:
 
   music:
-    build: ./music
+    #build: ./music
+    image: adilinden/octoprint-streamer-music
     volumes:
       - music:/music
     networks:
@@ -11,6 +12,7 @@ services:
 
   text:
     build: ./text
+    image: adilinden/octoprint-streamer-text
     env_file:
       - .stream-testing.env
     volumes:
@@ -19,15 +21,16 @@ services:
     networks:
       - net
 
-  stream-testing:
+  stream:
     build: ./stream
+    image: adilinden/octoprint-streamer-stream
     env_file:
       - .stream-testing.env
     environment:
       - FFMPEG_FPS=10
       - FFMPEG_FILTER_VIDEO=pad=ih*16/9:ih:(ow-iw)/2:(oh-ih)/2,scale=854:480,format=yuv420p
-      - FFMPEG_FILTER_PRTTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/printer.txt:x=10:y=10:reload=1
-      - FFMPEG_FILTER_JOBTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/job.txt:x=10:y=10+(1.5*line_h):reload=1
+      - FFMPEG_FILTER_PRTTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/printer.txt:x=10:y=10:reload=1:expansion=none:box=1:boxcolor=black@0.5:boxborderw=5
+      - FFMPEG_FILTER_JOBTXT=,drawtext=fontfile=/font/OpenSans-Bold.ttf:fontcolor=white:fontsize=16:textfile=/text/job.txt:x=10:y=10+(1.5*line_h):reload=1:expansion=none:box=1:boxcolor=black@0.5:boxborderw=5
       - FFMPEG_CMD=-loglevel info
           -re -f mjpeg -framerate $${FFMPEG_FPS} -i $${SOURCE_URL}
           -f lavfi -i "amovie=/music/all.mp3:loop=0,asetpts=N/SR/TB"
