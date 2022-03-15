@@ -24,7 +24,7 @@ RUN apk add --no-cache --update \
         freetype-dev
 
 # Get fdk-aac
-RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
+RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
         apk add --no-cache --update fdk-aac-dev
 
 WORKDIR /root

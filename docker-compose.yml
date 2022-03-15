@@ -11,7 +11,7 @@ services:
       - net
 
   text:
-    #build: ./text
+    build: ./text
     image: adilinden/octoprint-streamer-text
     env_file:
       - .stream-testing.env
@@ -22,7 +22,7 @@ services:
       - net
 
   stream:
-    #build: ./stream
+    build: ./stream
     image: adilinden/octoprint-streamer-stream
     env_file:
       - .stream-testing.env
