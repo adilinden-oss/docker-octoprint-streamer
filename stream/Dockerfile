@@ -1,3 +1,8 @@
+#
+# NOTE: Need to build ffmpeg from source as the Alpine package
+# does not include the 'drawtext' filter.
+#
+
 FROM alpine:3.9 AS builder
 
 ARG FFMPEG_TAG=n4.1.1
