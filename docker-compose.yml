@@ -13,6 +13,7 @@ services:
   text:
     #build: ./text
     image: adilinden/octoprint-streamer-text
+    restart: unless-stopped
     env_file:
       - .stream-testing.env
     volumes:
@@ -24,6 +25,7 @@ services:
   stream:
     #build: ./stream
     image: adilinden/octoprint-streamer-stream
+    restart: unless-stopped
     env_file:
       - .stream-testing.env
     environment:
